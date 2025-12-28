@@ -43,14 +43,14 @@ class MainActivity : AppCompatActivity() {
         Log.e(TAG, "Action = $appLinkAction")
         Log.e(TAG, "Data = $appLinkData")
 
-        showDataFlowRXJava()
-        singleObservableXJava()
-        completeObservableRxJava()
-        mayBeObservableRxJava()
+//        showDataFlowRXJava()
+//        singleObservableXJava()
+//        completeObservableRxJava()
+//        mayBeObservableRxJava()
 
 //        RX Operators
-        rxJavaOperatorRange()
-        rxJavaOperatorRepeat()
+//        rxJavaOperatorRange()
+//        rxJavaOperatorRepeat()
         OperatorExample()
         filterningObservable()
         combiningObservable()
@@ -59,6 +59,26 @@ class MainActivity : AppCompatActivity() {
         errorHandlingOperator()
 //        Utility Operator
         utilityOperators()
+
+//        Cold Hot and Connectable observable
+        coldHotConnectedable()
+    }
+
+    private fun coldHotConnectedable() {
+        val observable = Observable.just(1,2,3,4)
+        observable.subscribe{item-> Log.i(TAG, "Test Cold $item")}
+
+        Thread.sleep(3000)
+
+        observable.subscribe{item-> Log.i(TAG, "Test Cold 2 $item")}
+
+        Log.i(TAG, "============Hot and connectable================")
+
+        val connectableObserver = Observable.just(1,2,3,4).publish()
+        connectableObserver.subscribe{item-> Log.i(TAG, "Test Hot $item")}
+        connectableObserver.subscribe{item-> Log.i(TAG, "Test hot 2 $item")}
+        connectableObserver.connect()
+
     }
 
     private fun utilityOperators() {
